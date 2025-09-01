@@ -1,155 +1,152 @@
+# Neovim Tips and Tricks
 
-## Neovim
-[space] + S + H = Search help
+## General Navigation
+- `h` -> Move left
+- `j` -> Move down
+- `k` -> Move up
+- `l` -> Move right
+- `w` -> Jump forwards to the start of a word
+- `b` -> Jump backwards to the start of a word
+- `e` -> Jump to the end of a word
+- `gg` -> Go to the start of the file
+- `G` -> Go to the end of the file
+- `<num>G` -> Go to line `<num>`
+- `0` -> Go to the start of the line
+- `$` -> Go to the end of the line
+- `%` -> Jump to matching bracket
+- `Ctrl + o` -> Jump to older cursor position
+- `Ctrl + i` -> Jump to newer cursor position
 
-Many commands are a combination of 1) operator (what to do) and 2) motion (where to do it).
-h -> left
-j -> down
-k -> up
-l -> right
+---
 
-a -> append (insert after cursor)
-A -> append (insert at end of line)s
-i -> insert (insert before cursor)
-R -> replace (overwrite text)(Replace mode)
-x -> delete character under cursor
-dd -> delete line
-dw -> delete word
-u -> undo
-. -> repeat last command
-Ctrl + r -> redo
+## Editing Text
+### Inserting and Replacing
+- `a` -> Append (insert after cursor)
+- `A` -> Append (insert at the end of the line)
+- `i` -> Insert (insert before cursor)
+- `R` -> Replace (overwrite text, Replace mode)
+- `r` -> Replace a single character
 
-w -> jump forwards to the start of a word
-b -> jump backwards to the start of a word
-e -> jump to the end of a word
+### Deleting
+- `x` -> Delete character under cursor
+- `dd` -> Delete line
+- `dw` -> Delete word
+- `d3w` -> Delete 3 words forwards
+- `2dd` -> Delete 2 lines
+- `D` or `d$` -> Delete from the cursor to the end of the line
 
-gg -> go to the start of the file
-G -> go to the end of the file
+### Changing
+- `cw` -> Change (replace) a word
+- `ce` -> Change (replace) to the end of the word
+- `C` or `c$` -> Change (replace) to the end of the line
 
-yy -> yank (copy) a line
-yw -> yank (copy) a word
-y$ -> yank (copy) to the end of the line
-p -> paste after the cursor
-P -> paste before the cursor
+### Undo and Redo
+- `u` -> Undo
+- `Ctrl + r` -> Redo
+- `U` -> Undo all changes on a line
 
-0 -> go to the start of the line
-\$ -> go to the end of the line
+---
 
-O -> open a new line above the current line
-o -> open a new line below the current line
+## Copying and Pasting
+- `yy` -> Yank (copy) a line
+- `yw` -> Yank (copy) a word
+- `y$` -> Yank (copy) to the end of the line
+- `p` -> Paste after the cursor
+- `P` -> Paste before the cursor
+- `dd` then `p` -> Move a line down
+- `dd` then `P` -> Move a line up
 
-cw -> change (replace) a word
-ce -> change (replace) to the end of the word
-C or c$ -> change (replace) to the end of the line
+---
 
-D or d$ -> delete from the cursor to the end of the line
-r -> replace a single character
+## Searching
+- `/word` -> Search for `word`
+- `n` -> Next occurrence
+- `N` -> Previous occurrence
+- `*` -> Search for the word under the cursor
+- `#` -> Search backwards for the word under the cursor
+- `:s/<old>/<new>/g` -> Replace `<old>` with `<new>` in the current line
+- `:%s/<old>/<new>/g` -> Replace `<old>` with `<new>` in the whole file
+- `:%s/<old>/<new>/gc` -> Replace `<old>` with `<new>` in the whole file with confirmation
+- `:20,30s/<old>/<new>/g` -> Replace `<old>` with `<new>` from line 20 to line 30
 
-<num>w -> jump forwards <num> words
+---
 
-U -> undo all changes on a line
+## Visual Modes
+- `v` -> Start visual mode (highlight text)
+- `V` -> Start visual line mode (highlight whole lines)
+- `Ctrl + V` -> Start visual block mode (highlight a block of text)
 
-dd then p -> move a line down
-dd then P -> move a line up
+---
 
-d3w -> delete 3 words forwards
-2dd -> delete 2 lines
+## Working with Files
+- `:r filename` -> Read the contents of `filename` into the current file
+- `:r !<command>` -> Read the output of an external command into the current file
+- `:vsp filename` -> Open file in vertical split
+- `:tabnew filename` -> Open file in new tab
+- `gt` -> Go to next tab
+- `gT` -> Go to previous tab
 
-<num>G -> go to line <num>
-/<word> -> search for <word> && n -> next occurrence && N -> previous occurrence
+---
 
-Ctrl + o -> jump to older cursor position
-Ctrl + i -> jump to newer cursor position
+## Registers and Clipboard
+- `"0p` -> Paste from register `0`
+- `"+y` -> Yank to system clipboard (requires `+clipboard` feature)
+- `"+p` -> Paste from system clipboard (requires `+clipboard` feature)
 
-% -> jump to matching bracket
+---
 
-:s/<old>/<new>/g -> replace <old> with <new> in the current line
-:%s/<old>/<new>/g -> replace <old> with <new> in the whole file
-:%s/<old>/<new>/gc -> replace <old> with <new> in the whole file with confirmation
-:20,30s/<old>/<new>/g -> replace <old> with <new> from line 20 to line 30
+## Macros
+- `q<register>` -> Start recording a macro into register `<register>` (a-z)
+- `q` -> Stop recording the macro
+- `@<register>` -> Play the macro in register `<register>`
+- `@@` -> Play the last played macro again
+- `<num>@<register>` -> Play the macro in register `<register>` `<num>` times
 
-* -> search for the word under the cursor
-'#' -> search backwards for the word under the cursor
-Once in search mode:
-   + n -> next occurrence
-   + N -> previous occurrence
-   + Enter -> repeat last search
-   or c + i + w -> change the word under the cursor
-      then Esc + n -> go to next occurrence + . -> repeat the change
+---
 
-!<command> -> run an external command
+## Git Integration (Fugitive Vim)
+### Stage Files
+- Navigate to the desired file within the status window using `j` and `k` (or `Ctrl + n` and `Ctrl + p`).
+- Press `-` to stage or unstage the file under the cursor.
+- To stage multiple files, visually select them using `V` and then press `-`.
+- To stage a specific hunk within a file:
+  1. Navigate to the file.
+  2. Press `=` to view the diff.
+  3. Navigate to the hunk and press `-`.
 
-v -> start visual mode (highlight text) (then you can use y, d, c, etc.)
-   + "}" or "{" -> go to next or previous empty line
-V -> start visual line mode (highlight whole lines)
-Ctrl + V -> start visual block mode (highlight a block of text) then Insert insert text in multiple lines + Esc
+### Commit Changes
+- From the Git status window, with your desired changes staged:
+  1. Press `cc` to initiate the commit process.
+  2. A new buffer will open for you to compose your commit message.
+  3. Enter your commit message, save the buffer, and quit (e.g., `:wq`) to complete the commit.
 
-:r filename -> read the contents of filename into the current file
-:r !<command> -> read the output of an external command into the current file
+---
 
-:set ic -> ignore case in searches
-:set noic -> do not ignore case in searches
-:set hlsearch -> highlight search results
-:set nu -> show line numbers
-:set invnu -> toggle line numbers
+## Plugins and Shortcuts
+### Telescope Shortcuts
+- `<leader>ff` -> Find files
+- `<leader>fg` -> Live grep
 
-Ctrl + w -> jump to the next window
-:<first letter of command> + (Ctrl + d) -> show all commands starting with <first letter of command>
-
-gx -> open the file under the cursor with the default application (if it's a URL, it opens in the browser)
-gd -> go to definition of a variable or function under the cursor (if supported by LSP)
-
-:abbr pgn penguin -> create an abbreviation (when you type 'pgn' and then a non-keyword character, it will be replaced with 'penguin')
-:unab pgn -> remove the abbreviation for 'pgn'
-
-:vsp filename -> open file in vertical split
-:tabnew filename -> open file in new tab
-gt -> go to next tab
-gT -> go to previous tab
-
-va)  - [ V ]isually select [ A ]round [ ) ]paren
-
-Gdiffsplit -> open a vertical split showing git diffs (needs fugitive.vim plugin)
-
-
-double quotes + <num> + p -> paste from register <num> (0-9)
-
-double quotes + plus + y -> yank to system clipboard (requires +clipboard feature)
-double quotes + plus + p -> paste from system clipboard (requires +clipboard feature)
-
+### Tab Shortcuts
+- `<F8>` -> Go to next tab
+- `<F7>` -> Go to previous tab
 
 ### LSP Autocomplete
+- `Ctrl + n` / `Ctrl + p` -> Cycle forward or backward through autocomplete suggestions
+- `Ctrl + y` -> Accept autocomplete suggestion
 
-Ctrl + n / Ctrl + p --> Cycle forward or backward through autocomplete suggestions
-Ctrl + y --> Accept autocomplete suggestion
+### Plugin Manager
+- `:Lazy` -> Open Lazy plugin manager
 
-:Lazy -> open Lazy plugin manager
+---
 
-### Shortcuts
-
-- nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-- nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-- nnoremap <F8> gt
-- nnoremap <F7> gT
-
-
-### Macros
-q + <register letter> -> start recording a macro into register <register letter> (a-z)
-q -> stop recording the macro
-@ + <register letter> -> play the macro in register <register letter>
-@@ -> play the last played macro again
-<num> + @ + <register letter> -> play the macro in register <register letter> <num> times
-
-
-### Fugitive Vim (Git integration)
-
-#### Stage Files:
-- Navigate to the desired file within the status window using j and k (or C-n and C-p).
-- Press - (dash) to stage or unstage the file under the cursor.
-- To stage multiple files, visually select them using V and then press -.
-- To stage a specific hunk (a block of changes) within a file, navigate to the file, press = to view the diff, then navigate to the hunk and press -.
-
-#### Commit Changes:
-- From the Git status window, with your desired changes staged, press cc to initiate the commit process.
-- A new buffer will open for you to compose your commit message.
-- Enter your commit message, save the buffer, and quit (e.g., :wq) to complete the commit.
+## Miscellaneous
+- `:set ic` -> Ignore case in searches
+- `:set noic` -> Do not ignore case in searches
+- `:set hlsearch` -> Highlight search results
+- `:set nu` -> Show line numbers
+- `:set invnu` -> Toggle line numbers
+- `gx` -> Open the file under the cursor with the default application (e.g., URL in browser)
+- `gd` -> Go to the definition of a variable or function under the cursor (if supported by LSP)
+- `:abbr pgn penguin` -> Create an abbreviation (e.g., typing `pgn` will replace it with `penguin`)
+- `:unab pgn` -> Remove the abbreviation for `pgn`
