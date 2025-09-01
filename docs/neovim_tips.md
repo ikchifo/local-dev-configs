@@ -150,3 +150,6 @@
 - `gd` -> Go to the definition of a variable or function under the cursor (if supported by LSP)
 - `:abbr pgn penguin` -> Create an abbreviation (e.g., typing `pgn` will replace it with `penguin`)
 - `:unab pgn` -> Remove the abbreviation for `pgn`
+- `va)` -> Visually Select around a `[)]` parentheses
+- `vi)` -> Select inside a paragraph
+- `ci'` -> Change inside quotes
