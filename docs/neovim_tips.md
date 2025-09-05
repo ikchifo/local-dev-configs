@@ -16,6 +16,7 @@
 - `%` -> Jump to matching bracket
 - `Ctrl + o` -> Jump to older cursor position
 - `Ctrl + i` -> Jump to newer cursor position
+- `^` -> Go to the first non-blank character of the line
 
 ---
 
@@ -31,12 +32,16 @@
 - `x` -> Delete character under cursor
 - `dd` -> Delete line
 - `dw` -> Delete word
+- `di"` -> Delete inside double quotes
+- `di'` -> Delete inside single quotes
+- `di(` -> Delete inside parentheses
 - `d3w` -> Delete 3 words forwards
 - `2dd` -> Delete 2 lines
 - `D` or `d$` -> Delete from the cursor to the end of the line
 
 ### Changing
-- `cw` -> Change (replace) a word
+- `ciw` -> Change inside a word
+- `cw` -> Change (replace) a word from the cursor to the end of the word
 - `ce` -> Change (replace) to the end of the word
 - `C` or `c$` -> Change (replace) to the end of the line
 
@@ -50,6 +55,7 @@
 ## Copying and Pasting
 - `yy` -> Yank (copy) a line
 - `yw` -> Yank (copy) a word
+- `yiw` -> Yank (copy) inside a word
 - `y$` -> Yank (copy) to the end of the line
 - `p` -> Paste after the cursor
 - `P` -> Paste before the cursor
@@ -89,9 +95,12 @@
 ---
 
 ## Registers and Clipboard
-- `"0p` -> Paste from register `0`
+- `"ayw` -> Yank (copy) a word into register `a`
+- `<Ctrl> + r + a` -> Paste from register `a`
+- `"ap` -> Paste from register `a`
 - `"+y` -> Yank to system clipboard (requires `+clipboard` feature)
 - `"+p` -> Paste from system clipboard (requires `+clipboard` feature)
+- `<Ctrl> + r + +` -> Paste from system clipboard (requires `+clipboard` feature)
 
 ---
 
@@ -101,6 +110,12 @@
 - `@<register>` -> Play the macro in register `<register>`
 - `@@` -> Play the last played macro again
 - `<num>@<register>` -> Play the macro in register `<register>` `<num>` times
+
+## Marks
+- `m<letter>` -> Set a mark at the current cursor position
+- `"<letter>d'a` -> into register(") named (<letter>) put the (d)eletion from the cursor to the LINE containing mark(') (<letter>)
+- `'<letter>` -> Go to the position of the mark `<letter>`
+- `'<letter>`` -> Go to the position of the mark `<letter>` and back to the current positione
 
 ---
 
@@ -153,3 +168,8 @@
 - `va)` -> Visually Select around a `[)]` parentheses
 - `vi)` -> Select inside a paragraph
 - `ci'` -> Change inside quotes
+- `:bp` -> Go to the previous buffer
+- `:bn` -> Go to the next buffer
+- `:ls` -> List all buffers
+
+- In insert mode, `<CTRL-r>=60*60 <ENTER>` -> Insert the result of the expression `60*60`
