@@ -17,7 +17,7 @@
 - `Ctrl + o` -> Jump to older cursor position
 - `Ctrl + i` -> Jump to newer cursor position
 - `^` -> Go to the first non-blank character of the line
-
+- `<cr>` -> Carriage return / Enter key
 ---
 
 ## Editing Text
@@ -81,6 +81,7 @@
 - `v` -> Start visual mode (highlight text)
 - `V` -> Start visual line mode (highlight whole lines)
 - `Ctrl + V` -> Start visual block mode (highlight a block of text)
+- `ggVG` -> Select all text in the file
 
 ---
 
