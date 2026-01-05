@@ -27,6 +27,7 @@
 - `i` -> Insert (insert before cursor)
 - `R` -> Replace (overwrite text, Replace mode)
 - `r` -> Replace a single character
+- `gcc` -> Comment/uncomment current line (requires commentary plugin)
 
 ### Deleting
 - `x` -> Delete character under cursor
@@ -92,6 +93,20 @@
 - `:tabnew filename` -> Open file in new tab
 - `gt` -> Go to next tab
 - `gT` -> Go to previous tab
+- Close tab: `:tabclose` or `:tabc`
+
+## Neo-Tree
+- `\\` -> Toggle Neo-Tree file explorer
+- `:Neotree toggle` -> Toggle Neo-Tree file explorer
+- `t` -> Open file in new tab from Neo-Tree
+- `s` -> Open file in horizontal split from Neo-Tree
+- `S` -> Open file in vertical split from Neo-Tree
+- `P` -> Toggle preview pane in Neo-Tree
+- `d` -> Delete file in Neo-Tree
+- `a` -> Add file in Neo-Tree
+- `A` -> Add directory in Neo-Tree
+- `r` -> Rename file in Neo-Tree
+- `H` -> Toggle hidden files in Neo-Tree
 
 ---
 
@@ -140,8 +155,8 @@
 
 ## Plugins and Shortcuts
 ### Telescope Shortcuts
-- `<leader>ff` -> Find files
-- `<leader>fg` -> Live grep
+- `<leader>sf` -> Find files
+- `<leader>sg` -> Live grep
 
 ### Tab Shortcuts
 - `<F8>` -> Go to next tab
