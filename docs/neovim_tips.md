@@ -157,6 +157,7 @@
 ### Telescope Shortcuts
 - `<leader>sf` -> Find files
 - `<leader>sg` -> Live grep
+- `<leader>s.` -> Search Recent Files
 
 ### Tab Shortcuts
 - `<F8>` -> Go to next tab

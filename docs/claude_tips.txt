@@ -1,0 +1,9 @@
+
+shift + tab -> plan mode in claude
+/context
+- explore forcing claude to remember special prompts during compacting
+- remove context from claude to help it work a bit better
+
+Esc + Esc - Jump back in coversation
+
+/resume - continue from a previous conversation
