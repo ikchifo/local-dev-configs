@@ -1,0 +1,591 @@
+{
+    "version": "1.0",
+    "description": "Skill activation triggers for Python, Golang, and Java development workflows with Superpowers plugin integration",
+    "skills": {
+        "python-dev-guidelines": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Python development best practices including FastAPI, async patterns, and modern tooling (uv, pytest, ruff)",
+            "promptTriggers": {
+                "keywords": [
+                    "python",
+                    "fastapi",
+                    "flask",
+                    "django",
+                    "pytest",
+                    "pydantic",
+                    "async python",
+                    "asyncio",
+                    "pandas",
+                    "numpy",
+                    "data processing",
+                    "python script",
+                    "python api",
+                    "python service",
+                    "uv",
+                    "pyproject.toml"
+                ],
+                "intentPatterns": [
+                    "(create|add|implement|build|write).*?(python|fastapi|flask|django|api|service|script)",
+                    "(fix|debug|handle).*?(python|error|exception)",
+                    "(test|testing).*?python",
+                    "(how to|best practice).*?python",
+                    "(async|asynchronous).*?python"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.py",
+                    "**/pyproject.toml",
+                    "**/requirements.txt",
+                    "**/setup.py"
+                ],
+                "pathExclusions": [
+                    "**/__pycache__/**",
+                    "**/.venv/**",
+                    "**/venv/**",
+                    "**/*.pyc"
+                ],
+                "contentPatterns": [
+                    "from fastapi",
+                    "from flask",
+                    "import pandas",
+                    "import asyncio",
+                    "@pytest",
+                    "async def"
+                ]
+            }
+        },
+        "golang-dev-guidelines": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Golang development best practices including project structure, testing, concurrency, and Kubernetes controllers",
+            "promptTriggers": {
+                "keywords": [
+                    "golang",
+                    "go",
+                    "go service",
+                    "go api",
+                    "kubernetes controller",
+                    "k8s operator",
+                    "go routine",
+                    "goroutine",
+                    "channel",
+                    "go test",
+                    "go module",
+                    "chi",
+                    "gin",
+                    "fiber",
+                    "grpc",
+                    "protobuf"
+                ],
+                "intentPatterns": [
+                    "(create|add|implement|build|review|write).*?(go|golang|service|api|controller|operator)",
+                    "(fix|debug|handle).*?(go|golang|error)",
+                    "(test|testing).*?(go|golang)",
+                    "(how to|best practice|best practices).*?(go|golang)",
+                    "(concurrent|concurrency|goroutine|channel).*?(go|golang)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.go",
+                    "**/go.mod",
+                    "**/go.sum"
+                ],
+                "pathExclusions": [
+                    "**/vendor/**",
+                    "**/*_test.go"
+                ],
+                "contentPatterns": [
+                    "func.*http\\.Handler",
+                    "package main",
+                    "import \\(",
+                    "go func\\(",
+                    "context\\.Context"
+                ]
+            }
+        },
+        "java-dev-guidelines": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Java development best practices including Spring Boot, JPA, testing patterns, and Google Java Style Guide",
+            "promptTriggers": {
+                "keywords": [
+                    "java",
+                    "spring",
+                    "spring boot",
+                    "maven",
+                    "gradle",
+                    "junit",
+                    "mockito",
+                    "hibernate",
+                    "jpa",
+                    "rest api",
+                    "rest controller",
+                    "java service",
+                    "java api",
+                    "spring data",
+                    "spring security"
+                ],
+                "intentPatterns": [
+                    "(create|add|implement|build|write|review).*?(java|spring|api|service|controller|repository)",
+                    "(fix|debug|handle).*?(java|exception|error)",
+                    "(test|testing).*?java",
+                    "(how to|best practice).*?java",
+                    "(spring boot|rest).*?api"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.java",
+                    "**/pom.xml",
+                    "**/build.gradle",
+                    "**/build.gradle.kts",
+                    "**/application.yml",
+                    "**/application.properties"
+                ],
+                "pathExclusions": [
+                    "**/target/**",
+                    "**/build/**",
+                    "**/.gradle/**"
+                ],
+                "contentPatterns": [
+                    "@RestController",
+                    "@Service",
+                    "@Repository",
+                    "@SpringBootApplication",
+                    "import org.springframework",
+                    "public class.*Test"
+                ]
+            }
+        },
+        "superpowers:using-superpowers": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "critical",
+            "description": "Mandatory workflow for finding and using Superpowers skills - triggers at conversation start",
+            "promptTriggers": {
+                "keywords": [
+                    "start",
+                    "begin",
+                    "new conversation",
+                    "help me",
+                    "i need"
+                ],
+                "intentPatterns": [
+                    "^(start|begin|help|hi|hello)",
+                    "(new|start).*?(task|project|feature)"
+                ]
+            }
+        },
+        "superpowers:test-driven-development": {
+            "type": "guardrail",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "RED-GREEN-REFACTOR cycle - use before writing implementation code",
+            "promptTriggers": {
+                "keywords": [
+                    "implement feature",
+                    "add feature",
+                    "fix bug",
+                    "bugfix",
+                    "write function",
+                    "create function",
+                    "new feature"
+                ],
+                "intentPatterns": [
+                    "(implement|add|create|write|build).*?(feature|function|method|class)",
+                    "(fix|bugfix|resolve).*?(bug|issue|problem)"
+                ]
+            }
+        },
+        "superpowers:systematic-debugging": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "critical",
+            "description": "Four-phase debugging framework - use for ANY bug, test failure, or unexpected behavior",
+            "promptTriggers": {
+                "keywords": [
+                    "bug",
+                    "error",
+                    "failing",
+                    "broken",
+                    "not working",
+                    "unexpected",
+                    "issue",
+                    "test failure",
+                    "test failing",
+                    "crash",
+                    "exception"
+                ],
+                "intentPatterns": [
+                    "(debug|fix|solve|investigate).*?(bug|error|issue|problem|failure)",
+                    "(test|tests).*?(fail|failing|failed)",
+                    "(not work|broken|crash).*",
+                    "why (is|does|doesn't)"
+                ]
+            }
+        },
+        "superpowers:brainstorming": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Refine rough ideas into fully-formed designs before coding - use for creating or developing new features",
+            "promptTriggers": {
+                "keywords": [
+                    "design",
+                    "architecture",
+                    "approach",
+                    "how should",
+                    "best way",
+                    "structure",
+                    "plan"
+                ],
+                "intentPatterns": [
+                    "(design|architect|structure|plan).*?(feature|system|api|service)",
+                    "(how should|what's the best|best way).*?(implement|build|create)",
+                    "(approach|strategy).*?(for|to)"
+                ]
+            }
+        },
+        "superpowers:verification-before-completion": {
+            "type": "guardrail",
+            "enforcement": "suggest",
+            "priority": "critical",
+            "description": "Verify work is actually complete before claiming success - use before committing or creating PRs",
+            "promptTriggers": {
+                "keywords": [
+                    "done",
+                    "complete",
+                    "finished",
+                    "fixed",
+                    "passing",
+                    "commit",
+                    "pull request",
+                    "pr"
+                ],
+                "intentPatterns": [
+                    "(done|complete|finished|fixed|ready)",
+                    "(create|make).*?(commit|pr|pull request)",
+                    "all.*?(pass|passing|work)"
+                ]
+            }
+        },
+        "superpowers:writing-plans": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Create detailed implementation plans with exact file paths and complete code examples",
+            "promptTriggers": {
+                "keywords": [
+                    "create plan",
+                    "implementation plan",
+                    "detailed plan",
+                    "step by step",
+                    "roadmap"
+                ],
+                "intentPatterns": [
+                    "(create|write|make).*?(plan|roadmap|steps)",
+                    "step by step.*?",
+                    "detailed.*?(implementation|plan)"
+                ]
+            }
+        },
+        "superpowers:executing-plans": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Execute implementation plans in controlled batches with review checkpoints",
+            "promptTriggers": {
+                "keywords": [
+                    "execute plan",
+                    "run plan",
+                    "implement plan",
+                    "follow plan"
+                ],
+                "intentPatterns": [
+                    "(execute|run|implement|follow).*?plan"
+                ]
+            }
+        },
+        "superpowers:using-git-worktrees": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Create isolated git worktrees for feature work - use before starting implementation",
+            "promptTriggers": {
+                "keywords": [
+                    "feature work",
+                    "new branch",
+                    "isolate work",
+                    "worktree"
+                ],
+                "intentPatterns": [
+                    "(start|begin|create).*?(feature|branch)",
+                    "isolate.*?work",
+                    "git worktree"
+                ]
+            }
+        },
+        "superpowers:requesting-code-review": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Request code review after completing tasks or before merging",
+            "promptTriggers": {
+                "keywords": [
+                    "review",
+                    "code review",
+                    "check code",
+                    "verify implementation"
+                ],
+                "intentPatterns": [
+                    "(review|check|verify).*?(code|implementation)",
+                    "code review",
+                    "ready.*?(review|merge)"
+                ]
+            }
+        },
+        "superpowers:testing-anti-patterns": {
+            "type": "guardrail",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Prevent testing mock behavior and test-only production code - use when writing or changing tests",
+            "promptTriggers": {
+                "keywords": [
+                    "write test",
+                    "add test",
+                    "mock",
+                    "stub",
+                    "test setup"
+                ],
+                "intentPatterns": [
+                    "(write|add|create).*?test",
+                    "(mock|stub|fake).*?",
+                    "test.*?(setup|helper)"
+                ]
+            }
+        },
+        "superpowers:root-cause-tracing": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Trace errors back through call stack to find original trigger - use for deep execution errors",
+            "promptTriggers": {
+                "keywords": [
+                    "trace error",
+                    "root cause",
+                    "where does",
+                    "stack trace",
+                    "call stack"
+                ],
+                "intentPatterns": [
+                    "(trace|find|locate).*?(error|cause|source)",
+                    "root cause",
+                    "where (does|is).*?(come|origin)"
+                ]
+            }
+        },
+        "superpowers:condition-based-waiting": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Replace arbitrary timeouts with condition polling for async testing - use for flaky tests",
+            "promptTriggers": {
+                "keywords": [
+                    "flaky test",
+                    "race condition",
+                    "timing issue",
+                    "timeout",
+                    "wait for"
+                ],
+                "intentPatterns": [
+                    "(flaky|intermittent|inconsistent).*?test",
+                    "race condition",
+                    "(timing|timeout).*?(issue|problem)",
+                    "wait.*?for"
+                ]
+            }
+        },
+        "uv-python-scripts": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Use uv with inline script dependencies for self-contained, executable Python scripts",
+            "promptTriggers": {
+                "keywords": [
+                    "python script",
+                    "create script",
+                    "write script",
+                    "standalone script",
+                    "utility script",
+                    "automation script",
+                    "data processing script",
+                    "executable python",
+                    "run script",
+                    "uv run",
+                    "inline dependencies",
+                    "script dependencies"
+                ],
+                "intentPatterns": [
+                    "(create|write|make|build).*?(python|py).*?script",
+                    "(create|write|make).*?script.*?(python|py)",
+                    "(standalone|utility|automation|data processing).*?script",
+                    "(executable|runnable).*?python",
+                    "script.*?(with|needs|requires).*?dependenc"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/scripts/**/*.py",
+                    "**/bin/*.py",
+                    "**/tools/*.py",
+                    "**/utils/*.py"
+                ],
+                "pathExclusions": [
+                    "**/__pycache__/**",
+                    "**/.venv/**",
+                    "**/venv/**",
+                    "**/site-packages/**",
+                    "**/tests/**",
+                    "**/test_*.py",
+                    "**/*_test.py"
+                ],
+                "contentPatterns": [
+                    "#!/usr/bin/env.*python",
+                    "#!/usr/bin/env.*uv",
+                    "# /// script",
+                    "if __name__ == ['\"]__main__['\"]"
+                ]
+            }
+        },
+        "mermaid-diagrams": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Generate professional diagrams from Mermaid syntax using mermaid-cli",
+            "promptTriggers": {
+                "keywords": [
+                    "diagram",
+                    "flowchart",
+                    "mermaid",
+                    "architecture diagram",
+                    "sequence diagram",
+                    "generate image",
+                    "create diagram",
+                    "visual",
+                    "chart",
+                    "graph",
+                    "ascii art to image",
+                    "mmdc"
+                ],
+                "intentPatterns": [
+                    "(create|generate|make|draw|build).*?(diagram|flowchart|chart|visual|graph)",
+                    "(convert|transform).*?(ascii|text).*?(image|diagram|visual)",
+                    "(architecture|sequence|flow).*?diagram",
+                    "mermaid.*?(diagram|chart|generate)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.mmd",
+                    "**/*.mermaid"
+                ],
+                "contentPatterns": [
+                    "flowchart",
+                    "sequenceDiagram",
+                    "classDiagram",
+                    "stateDiagram",
+                    "erDiagram",
+                    "gantt",
+                    "pie",
+                    "graph TD",
+                    "graph LR"
+                ]
+            }
+        },
+        "design-principles": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Enforce precise, minimal design system inspired by Linear, Notion, and Stripe - use for dashboards, admin interfaces, and enterprise UI",
+            "promptTriggers": {
+                "keywords": [
+                    "ui",
+                    "design",
+                    "dashboard",
+                    "admin interface",
+                    "frontend",
+                    "component",
+                    "layout",
+                    "styling",
+                    "css",
+                    "tailwind",
+                    "saas",
+                    "enterprise ui",
+                    "card",
+                    "button",
+                    "form",
+                    "modal",
+                    "sidebar",
+                    "navigation"
+                ],
+                "intentPatterns": [
+                    "(create|build|design|implement).*?(ui|interface|dashboard|component|page|screen)",
+                    "(style|styling|css).*?(component|element|page)",
+                    "(frontend|front-end).*?(design|implementation)",
+                    "(admin|saas|enterprise).*?(interface|dashboard|panel)",
+                    "(build|create).*?(form|modal|sidebar|nav)"
+                ]
+            },
+            "fileTriggers": {
+                "pathPatterns": [
+                    "**/*.tsx",
+                    "**/*.jsx",
+                    "**/*.css",
+                    "**/*.scss",
+                    "**/components/**",
+                    "**/pages/**",
+                    "**/app/**"
+                ],
+                "pathExclusions": [
+                    "**/node_modules/**",
+                    "**/*.test.tsx",
+                    "**/*.spec.tsx"
+                ],
+                "contentPatterns": [
+                    "className=",
+                    "tailwind",
+                    "styled-components",
+                    "@emotion",
+                    "css-in-js"
+                ]
+            }
+        }
+    },
+    "notes": {
+        "enforcement_types": {
+            "suggest": "Skill suggestion appears but doesn't block execution",
+            "block": "Requires skill to be used before proceeding (guardrail)",
+            "warn": "Shows warning but allows proceeding"
+        },
+        "priority_levels": {
+            "critical": "Highest - Always trigger when matched (debugging, verification)",
+            "high": "Important - Trigger for most matches (TDD, code review, testing)",
+            "medium": "Moderate - Trigger for clear matches (planning, worktrees)",
+            "low": "Optional - Trigger only for explicit matches"
+        },
+        "customization": {
+            "python_paths": "Adjust pathPatterns to match your Python project structure",
+            "golang_paths": "Adjust pathPatterns to match your Go project structure (services-pilot, chifo-controller-test, etc.)",
+            "java_paths": "Adjust pathPatterns to match your Java project structure (Maven/Gradle projects)",
+            "superpowers_integration": "Superpowers skills are prefixed with 'superpowers:' and auto-activated based on triggers",
+            "keywords": "Add domain-specific terms relevant to your work (e.g., specific frameworks, tools)",
+            "intentPatterns": "Use regex for flexible user intent matching"
+        }
+    }
+}
