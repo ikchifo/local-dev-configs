@@ -1,67 +1,13 @@
 ---
 name: uv-python-scripts
-description: Use when creating standalone Python scripts, utility scripts, automation scripts, or data processing scripts. Creates self-contained, executable Python files with inline dependencies using uv.
+description: Use when creating standalone Python scripts, utility scripts, automation scripts, or data processing scripts that are not part of a larger package.
 ---
 
 # UV Python Scripts
 
-**Purpose:** Create self-contained, executable Python scripts with inline dependencies using `uv`.
-
-**When to use:**
-- Creating standalone Python scripts
-- Writing utility or automation scripts
-- Data processing scripts
-- Any Python file that isn't part of a larger package/project
-
----
+Create self-contained, executable Python scripts with inline dependencies.
 
 ## Script Format
-
-Every standalone Python script must follow this format:
-
-```python
-#!/usr/bin/env -S uv run
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#   "requests",
-#   "pandas>=2.0.0",
-# ]
-# ///
-
-import requests
-import pandas as pd
-
-# Your code here
-```
-
----
-
-## Requirements
-
-1. **Shebang**: Always start with `#!/usr/bin/env -S uv run`
-2. **Inline metadata**: Include the `# /// script` block with:
-   - `requires-python`: Specify minimum Python version
-   - `dependencies`: List all required packages with optional version constraints
-3. **Self-contained**: The script must be executable without separate requirements.txt or virtual environment setup
-
----
-
-## Quick Examples
-
-### Minimal Script (no dependencies)
-
-```python
-#!/usr/bin/env -S uv run
-# /// script
-# requires-python = ">=3.12"
-# dependencies = []
-# ///
-
-print("Hello, world!")
-```
-
-### Script with Dependencies
 
 ```python
 #!/usr/bin/env -S uv run
@@ -76,80 +22,79 @@ print("Hello, world!")
 import httpx
 from rich import print
 
-response = httpx.get("https://api.github.com")
-print(response.json())
+# Your code here
 ```
 
-### Data Processing Script
+**First run downloads dependencies (cached afterward).**
+
+## Requirements
+
+1. **Shebang**: `#!/usr/bin/env -S uv run`
+2. **Inline metadata**: `# /// script` block with `requires-python` and `dependencies`
+3. **Self-contained**: No separate requirements.txt or venv needed
+
+## Running Scripts
+
+```bash
+chmod +x script.py && ./script.py      # Direct execution
+uv run script.py                        # Explicit uv
+./script.py arg1 arg2                   # With arguments
+```
+
+## CLI Arguments Pattern
 
 ```python
 #!/usr/bin/env -S uv run
 # /// script
 # requires-python = ">=3.12"
-# dependencies = [
-#   "pandas>=2.0.0",
-#   "pyarrow",
-# ]
+# dependencies = ["typer>=0.9.0"]
 # ///
 
-import pandas as pd
-from pathlib import Path
+import typer
 
-def process_csv(input_path: Path, output_path: Path) -> None:
-    df = pd.read_csv(input_path)
-    # Process data...
-    df.to_parquet(output_path)
+def main(name: str, count: int = 1, verbose: bool = False):
+    """Greet someone COUNT times."""
+    for _ in range(count):
+        msg = f"Hello, {name}!"
+        if verbose:
+            typer.echo(f"[verbose] {msg}")
+        else:
+            typer.echo(msg)
 
 if __name__ == "__main__":
-    import sys
-    process_csv(Path(sys.argv[1]), Path(sys.argv[2]))
+    typer.run(main)
 ```
 
----
+## Error Handling Pattern
 
-## Usage
+```python
+#!/usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["httpx>=0.25.0"]
+# ///
 
-After creating a script (e.g., `script.py`), users can run it directly:
+import sys
+import httpx
 
-```bash
-# Make executable and run
-chmod +x script.py
-./script.py
+def main() -> int:
+    try:
+        response = httpx.get("https://api.example.com", timeout=10.0)
+        response.raise_for_status()
+        print(response.json())
+        return 0
+    except httpx.HTTPError as e:
+        print(f"HTTP error: {e}", file=sys.stderr)
+        return 1
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        return 1
 
-# Or explicitly with uv
-uv run script.py
-
-# With arguments
-./script.py arg1 arg2
+if __name__ == "__main__":
+    sys.exit(main())
 ```
-
----
-
-## Benefits
-
-- **No manual setup**: No need to create virtual environments
-- **Self-documenting**: Dependencies declared inline
-- **Portable**: Works on any machine with `uv` installed
-- **Reproducible**: Pinned versions ensure consistent execution
-- **Fast**: uv caches dependencies aggressively
-
----
-
-## When NOT to Apply
-
-Do **NOT** use this pattern for:
-- Files within a package managed by `pyproject.toml`
-- Modules that are imported by other code
-- Library code (non-executable)
-- Test files
-
-For these cases, use standard project structure with `pyproject.toml`.
-
----
 
 ## Version Constraints
-
-Use standard PEP 440 version specifiers:
 
 ```python
 # dependencies = [
@@ -160,11 +105,7 @@ Use standard PEP 440 version specifiers:
 # ]
 ```
 
----
-
-## Adding Extra Indexes
-
-For packages from private indexes:
+## Private Indexes
 
 ```python
 # /// script
@@ -176,9 +117,14 @@ For packages from private indexes:
 # ///
 ```
 
----
+## When NOT to Use
+
+- Files within a package managed by `pyproject.toml`
+- Modules imported by other code
+- Library/non-executable code
+- Test files
 
 ## Reference
 
 - [uv scripts guide](https://docs.astral.sh/uv/guides/scripts/)
-- [PEP 723 – Inline script metadata](https://peps.python.org/pep-0723/)
+- [PEP 723 - Inline script metadata](https://peps.python.org/pep-0723/)
