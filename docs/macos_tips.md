@@ -22,3 +22,8 @@
 - **Proxy Icons:** Click and drag the small folder icon next to a window's title to move its path into a picker or terminal.
 
 - **Root Access:** Type `/` while a file picker is active to automatically open the "Go to Folder" bar.
+
+
+# Controlling Dell Monitors on macOS
+
+Use the [MonitorControl](https://github.com/MonitorControl/MonitorControl#readme) app to manage Dell monitor settings like brightness and contrast directly from your Mac.
