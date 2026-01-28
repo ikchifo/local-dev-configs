@@ -2,8 +2,8 @@
 
 ### WRITING COMMENTS
 
-- Write clear, concise, and informative comments. 
-- Only include comments that add value and context to the code. 
+- Write clear, concise, and informative comments.
+- Only include comments that add value and context to the code.
 - Avoid redundant or obvious comments, especially when the variable or function name is self-explanatory.
 - Code should be self-documenting. If you need a comment to explain what the code does, consider refactoring the code to make it clearer.
 
@@ -62,6 +62,51 @@ rg -c '<pattern>'
 
 **Enforcement**: If you use `grep -r` for code searching without attempting `rg` first, STOP and retry with ripgrep. This is a CRITICAL requirement.
 
+---
+
+### Using proper Git commands
+
+- NEVER use `git -C <path> status|commit|add|etc.` commands. ALWAYS use `git status|commit|add|etc. <path>` commands.
+
+---
+
+### Bash Guidelines
+
+#### IMPORTANT: Avoid commands that cause output buffering issues
+- DO NOT pipe output through `head`, `tail`, `less`, or `more` when monitoring or checking command output
+- DO NOT use `| head -n X` or `| tail -n X` to truncate output - these cause buffering problems
+- Instead, let commands complete fully, or use `--max-lines` flags if the command supports them
+- For log monitoring, prefer reading files directly rather than piping through filters
+
+#### When checking command output:
+- Run commands directly without pipes when possible
+- If you need to limit output, use command-specific flags (e.g., `git log -n 10` instead of `git log | head -10`)
+- Avoid chained pipes that can cause output to buffer indefinitel
+
+---
+
+### Writing and style
+
+Use sentence case for all headings (capitalize only the first word and
+proper nouns).
+
+Do not use emojis in text.
+
+#### Modal verbs
+
+Use modal verbs (should, may, must, etc.) following BCP 14 (RFC 2119)
+with their RFC-defined meanings. Write modal verbs in lowercase, not
+uppercase.
+
+#### Markdown
+
+Lists needs to be prepended by an empty line.
+
+Markdown files should have maximum 80 character line width. URLs should
+remain on single lines (exempt from the 80 character limit).
+
+---
+
 ### 🐍 Running Python with uv
 
 **PREFERRED**: Use `uv run` instead of `python3` or `python3 -c` for running Python scripts and one-liners. uv automatically manages environments and dependencies.
@@ -112,6 +157,4 @@ Then just run with `uv run script.py` — deps are auto-installed.
 
 Reference: [uv scripts guide](https://docs.astral.sh/uv/guides/scripts/)
 
-### Using proper Git commands
-
-- Never use `git -C <path> status|commit|add|etc.` commands. Always use `git status|commit|add|etc. <path>` commands.
+---
