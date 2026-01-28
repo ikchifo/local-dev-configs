@@ -1,9 +1,6 @@
 ---
 name: economist-style-reviewer
-description: Use when reviewing technical documentation, reports, or prose for
-  clarity and concision - applies The Economist's style principles including
-  short Anglo-Saxon words, concrete nouns, vivid verbs, and ruthless cutting
-  of jargon, clichés, and redundancy
+description: Use when reviewing technical documentation, reports, or prose for clarity and concision, applying The Economist style principles (short Anglo-Saxon words, concrete nouns, vivid verbs, and removal of jargon, cliches, and redundancy).
 ---
 
 # Economist style reviewer
