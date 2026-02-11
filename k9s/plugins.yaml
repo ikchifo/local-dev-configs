@@ -1,0 +1,93 @@
+plugins:
+  kubectl-yaml-cmd:
+    shortCut: Shift-O
+    description: "Copy kubectl get -o yaml command"
+    scopes:
+      - all
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        CMD="kubectl --context $CONTEXT -n $NAMESPACE get $RESOURCE_NAME $NAME -o yaml"
+        echo "$CMD"
+        echo "$CMD" | pbcopy
+        echo "Copied to clipboard"
+        read -p "Press Enter to continue..."
+
+  kubectl-logs-cmd:
+    shortCut: Shift-T
+    description: "Copy kubectl logs command"
+    scopes:
+      - pods
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        CMD="kubectl --context $CONTEXT -n $NAMESPACE logs $NAME -f"
+        echo "$CMD"
+        echo "$CMD" | pbcopy
+        echo "Copied to clipboard"
+        read -p "Press Enter to continue..."
+
+  kubectl-exec-cmd:
+    shortCut: Shift-X
+    description: "Copy kubectl exec command"
+    scopes:
+      - pods
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        CMD="kubectl --context $CONTEXT -n $NAMESPACE exec -it $NAME -- /bin/sh"
+        echo "$CMD"
+        echo "$CMD" | pbcopy
+        echo "Copied to clipboard"
+        read -p "Press Enter to continue..."
+
+  kubectl-describe-cmd:
+    shortCut: Shift-W
+    description: "Copy kubectl describe command"
+    scopes:
+      - all
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        CMD="kubectl --context $CONTEXT -n $NAMESPACE describe $RESOURCE_NAME $NAME"
+        echo "$CMD"
+        echo "$CMD" | pbcopy
+        echo "Copied to clipboard"
+        read -p "Press Enter to continue..."
+
+  kubectl-events:
+    shortCut: Shift-Q
+    description: "Show events for this resource"
+    scopes:
+      - all
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        echo "Events for $NAME:"
+        echo "---"
+        kubectl --context $CONTEXT -n $NAMESPACE get events --field-selector involvedObject.name=$NAME --sort-by='.lastTimestamp'
+        read -p "Press Enter to continue..."
+
+  copy-name:
+    shortCut: Shift-C
+    description: "Copy resource name to clipboard"
+    scopes:
+      - all
+    command: sh
+    background: false
+    args:
+      - -c
+      - |
+        echo "$NAME" | pbcopy
+        echo "Copied: $NAME"
+        sleep 1
